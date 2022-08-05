@@ -4,7 +4,7 @@ src
 ├── app // React 외의 요소들 보관함  
 │ 　　 ├── store.jsx - 종현님  
 │ 　　 └── slice - 종현님  
-│ 　　　　　 └── bucketSlice.jsx - 종현님  
+│ 　　　　　 └── CreateSlice.jsx - 종현님  
 │  
 ├── component // React에서 사용될 블록들  
 │ 　　　 ├── common  
@@ -20,10 +20,10 @@ src
 │ 　　　 └── Layout.jsx  
 │  
 ├── pages // route를 통해 보여줄 대형 컴포넌트 구성  
-│ 　　　 ├── Detail.jsx -상세 보기 화면
+│ 　　　 ├── Detail.jsx -상세 보기 화면  
 │ 　　　 └── Home.jsx - 리스트화면  
 │  
-├── shared // 각 페이지의 연결을 만들 routes들
+├── shared // 각 페이지의 연결을 만들 routes들  
 │ 　　　 └── router.jsx - react-router-dom  
 │  
 ├── App.css  
