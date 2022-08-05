@@ -25,7 +25,7 @@ const Form = () => {
                 }}>submit</button>
                 <button onClick={(e) => {
                     e.preventDefault();
-                    dispatch(del(0))
+                    dispatch(del({ id: 0 }))
                 }}>delete</button>
                 <button onClick={(e) => {
                     e.preventDefault();
