@@ -24,7 +24,7 @@ src
 │ 　　　 └── Home.jsx - 리스트화면  
 │  
 ├── shared // 각 페이지의 연결을 만들 routes들  
-│ 　　　 └── router.jsx - react-router-dom  
+│ 　　　 └── route.jsx - react-router-dom  
 │  
 ├── App.css  
 ├── App.js  
