@@ -19,7 +19,7 @@ export const storeSlice = createSlice({
                 title: action.payload.title,
                 content: action.payload.content,
                 id: action.payload.id,
-                date: new Date()
+                date: new Date().getTime()
             })
         },
         // payload로 id 전달해야함 : 삭제
