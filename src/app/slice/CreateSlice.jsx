@@ -15,14 +15,16 @@ export const storeSlice = createSlice({
         // : 추가
         add: (state, action) => {
             state.push({
+                author: action.payload.author,
                 title: action.payload.title,
                 content: action.payload.content,
-                id: action.payload.id
+                id: action.payload.id,
+                date: new Date()
             })
         },
         // payload로 id 전달해야함 : 삭제
         del: (state, action) => {
-            return current(state).filter((value) => value.id !== action.payload)
+            return current(state).filter((value) => value.id !== action.payload.id)
         },
         // id, title, content 전달 : 수정 
         rev: (state, action) => {
