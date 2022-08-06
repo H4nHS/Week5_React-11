@@ -1,6 +1,6 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
-import { add, rev, del } from '../../app/slice/CreateSlice';
+import { add } from '../../app/slice/CreateSlice';
 
 const Form = () => {
     const title = useRef();
@@ -8,7 +8,7 @@ const Form = () => {
     const author = useRef();
     const dispatch = useDispatch()
     const user = useSelector(state => state.store)
-    console.log(user)
+    console.log("user")
 
     return (
         <>

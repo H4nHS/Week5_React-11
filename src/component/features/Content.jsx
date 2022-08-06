@@ -13,6 +13,7 @@ function Content({status, id}) {
   const state = useSelector(state => state.store);
   const location = useLocation();
 
+  console.log("예")
   if (id === undefined && location !== null) {
     id = location.state.id;
   }
@@ -94,7 +95,6 @@ function Content({status, id}) {
           <MenuBoxBtn onClick={modifyCancel}>취소</MenuBoxBtn>
         </ButtonMenu>
       </ModifyContainer>
-
 
     :
 
