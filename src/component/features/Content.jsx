@@ -20,7 +20,7 @@ function Content({status, id}) {
 
   useEffect(() => {
     const contentData = state.filter(elem => elem.id === id)[0];
-    setContent('contentData');
+    setContent(contentData);
     setText({...text, title:contentData.title, content:contentData.content})
   },[mode])
 
