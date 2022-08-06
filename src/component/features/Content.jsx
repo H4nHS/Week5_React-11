@@ -13,13 +13,14 @@ function Content({status, id}) {
   const state = useSelector(state => state.store);
   const location = useLocation();
 
+  
   if (id === undefined && location !== null) {
     id = location.state.id;
   }
 
   useEffect(() => {
     const contentData = state.filter(elem => elem.id === id)[0];
-    setContent(contentData);
+    setContent('contentData');
     setText({...text, title:contentData.title, content:contentData.content})
   },[mode])
 
@@ -94,7 +95,6 @@ function Content({status, id}) {
           <MenuBoxBtn onClick={modifyCancel}>취소</MenuBoxBtn>
         </ButtonMenu>
       </ModifyContainer>
-
 
     :
 

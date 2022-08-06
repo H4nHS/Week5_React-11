@@ -3,6 +3,7 @@ import Home from '../pages/Home';
 import Detail from '../pages/Detail';
 
 function Router() {
+  console.log("호이")
   return(
     <BrowserRouter>
       <Routes>

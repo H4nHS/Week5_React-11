@@ -8,7 +8,7 @@ const Form = () => {
     const author = useRef();
     const dispatch = useDispatch()
     const user = useSelector(state => state.store)
-    console.log(user)
+    console.log('user')
 
     return (
         <>
