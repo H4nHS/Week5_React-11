@@ -3,7 +3,6 @@ import Home from '../pages/Home';
 import Detail from '../pages/Detail';
 
 function Router() {
-  console.log("얍")
   return(
     <BrowserRouter>
       <Routes>

@@ -1,51 +1,28 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
-import { rev, del } from '../../app/slice/CreateSlice';
+import { useDispatch } from "react-redux";
+import { rev, del} from '../../app/slice/CreateSlice';
 import { useNavigate, useLocation } from "react-router-dom";
 
-function Content({status, id}) {
+function Content() {
   const [content, setContent] = useState();
   const [mode, setMode] = useState("read");
   const [text, setText] = useState({title:"", content:""});
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const state = useSelector(state => state.store);
-  const location = useLocation();
-
-  console.log("예")
-  if (id === undefined && location !== null) {
-    id = location.state.id;
-  }
+  const { state } = useLocation();
 
   useEffect(() => {
-    const contentData = state.filter(elem => elem.id === id)[0];
-    setContent(contentData);
-    setText({...text, title:contentData.title, content:contentData.content})
-  },[mode])
-
-  // const propid = 5
-  // const contentData = async () => {
-  //   const json = await (await fetch('https://jsonplaceholder.typicode.com/comments')).json()
-  //   setContent(state.filter(elem => elem.id === props.id)[0]);
-  // }
-
-  // Home and Detail size changing
-  const size = status === "Home" ? '50vh' : '100vh'
+      setContent(state);
+      setText({...text, title:state.title, content:state.content})
+  }, [mode])
   
-  //page moving Home to Detail
-  
-  function intoDetailPage() {
-    if (status === 'Home') {
-      navigate(`/detail/${id}`, {state: {id:id}})
-    }
-  }
 
   // moving Main page
   function backspaceMain() {
     navigate('/');
   }
-
 
   // toogle box setting
   function toggleButtonActive (event) {
@@ -79,45 +56,48 @@ function Content({status, id}) {
     setMode('Read')
   }
 
+  console.log(content)
   // if mode === 'Modify' then
-  return (content === undefined ? <div> Now Loading... </div> : mode === 'modify' ?
-      <ModifyContainer onSubmit={modifyVerified}>
-        <ContentHead>
-          <HeadProfile>
-            <HeadProfileName>{content.email}</HeadProfileName>
-            <HeadProfileID>@{content.id}</HeadProfileID>
-          </HeadProfile>
-        </ContentHead>
-        <ContentModifyTitle name="title" value={text.title} onChange={modifyForm} placeholder="수정할 제목을 입력해주세요."></ContentModifyTitle>
-        <ContentModifyBody name="content" value={text.content} onChange={modifyForm} placeholder="수정할 내용을 입력해주세요."></ContentModifyBody>
-        <ButtonMenu>
-          <MenuBoxBtn type="submit">수정</MenuBoxBtn>
-          <MenuBoxBtn onClick={modifyCancel}>취소</MenuBoxBtn>
-        </ButtonMenu>
-      </ModifyContainer>
+  return (
+    <>
+      {content === undefined ? <div> Now Loading... </div> : mode === 'modify' ?
+        <ModifyContainer onSubmit={modifyVerified}>
+          <ContentHead>
+            <HeadProfile>
+              <HeadProfileName>{content.author}</HeadProfileName>
+              <HeadProfileID>@{content.postID}</HeadProfileID>
+            </HeadProfile>
+          </ContentHead>
+          <ContentModifyTitle name="title" value={text.title} onChange={modifyForm} placeholder="수정할 제목을 입력해주세요."></ContentModifyTitle>
+          <ContentModifyBody name="content" value={text.content} onChange={modifyForm} placeholder="수정할 내용을 입력해주세요."></ContentModifyBody>
+          <ButtonMenu>
+            <MenuBoxBtn type="submit">수정</MenuBoxBtn>
+            <MenuBoxBtn onClick={modifyCancel}>취소</MenuBoxBtn>
+          </ButtonMenu>
+        </ModifyContainer>
 
-    :
+      :
 
-      // if mode === 'Read' then
-      <ContentContainer size={size} cursor={status==="Home" ? 'pointer' : 'arrow'} onClick={intoDetailPage}>
-          {status === "Home" ? <></> : <><BackSpaceBtn onClick={backspaceMain}>←　스레드</BackSpaceBtn></>}
-        <ContentHead>
-          <HeadProfile>
-            <HeadProfileName>{content.email}</HeadProfileName>
-            <HeadProfileID>@{content.id}</HeadProfileID>
-          </HeadProfile>
-          {status === "Home" ? <></> : <>
-          <ContentMenu type="button" onClick={toggleButtonActive}>· · ·</ContentMenu>
-          <MenuBox display="flex">
-            <Triangle></Triangle>
-            <MenuBoxBtn color='#15202b' radius="5px 5px 0 0" onClick={deleteContent}>내용 삭제하기</MenuBoxBtn>
-            <MenuBoxBtn color='#15202b' radius="0 0 5px 5px" onClick={modifyContent}>내용 수정하기</MenuBoxBtn>
-          </MenuBox>
-          </>}
-        </ContentHead>
-        <ContentTitle>{content.title}</ContentTitle>
-        <ContentBody>{content.content}</ContentBody>
-      </ContentContainer>
+        // if mode === 'Read' then
+        <ContentContainer>
+          <BackSpaceBtn onClick={backspaceMain}>←　스레드</BackSpaceBtn>
+          <ContentHead>
+            <HeadProfile>
+              <HeadProfileName>{content.author}</HeadProfileName>
+              <HeadProfileID>@{content.postID}</HeadProfileID>
+            </HeadProfile>
+            <ContentMenu type="button" onClick={toggleButtonActive}>· · ·</ContentMenu>
+            <MenuBox display="flex">
+              <Triangle></Triangle>
+              <MenuBoxBtn color='#15202b' radius="5px 5px 0 0" onClick={deleteContent}>내용 삭제하기</MenuBoxBtn>
+              <MenuBoxBtn color='#15202b' radius="0 0 5px 5px" onClick={modifyContent}>내용 수정하기</MenuBoxBtn>
+            </MenuBox>
+          </ContentHead>
+          <ContentTitle>{content.title}</ContentTitle>
+          <ContentBody>{content.content}</ContentBody>
+        </ContentContainer>
+      }
+  </>
   )
 }
 
@@ -135,9 +115,8 @@ const ContentContainer = styled.div`
   margin:auto;
 
   width: 600px;
-  height: ${props => props.size};
+  height: 100vh;
 
-  cursor: ${props => props.cursor};
   box-sizing: border-box;
 `
 

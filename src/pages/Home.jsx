@@ -2,17 +2,17 @@ import React from "react";
 import Form from '../component/features/Form';
 import { useSelector } from 'react-redux/es/exports';
 import styled from "styled-components";
-import Content from "../component/features/Content";
+import ContentBlock from "../component/features/ContentBlock";
 
 function Home () {
   const contextList = useSelector(state => state.store);
-  console.log(contextList);
+  console.log(contextList)
   return(
     <>
       <TextList>
       <Form />
       {contextList.map(elem => {
-        return <Content key={elem.id} status="Home" id={elem.id} />
+        return <ContentBlock key={elem.postID} postData={elem} />
       })}
       </TextList>
     </>
