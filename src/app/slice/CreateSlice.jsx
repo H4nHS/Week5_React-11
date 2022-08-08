@@ -1,12 +1,30 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import axios from 'axios';
 
-const initialState = [
-    {
-        title: '초기값 입니다',
-        content: '초기값 입니다',
-        id: 0
+export const asyncSaveFetch = createAsyncThunk('saves',
+    async (payload, thunkAPI) => {
+        try {
+            const { data } = await axios.get("http://localhost:4000/info");
+            return thunkAPI.fulfillWithValue(data)
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    })
+
+export const asyncAddFetch = createAsyncThunk('add',
+    async (payload, thunkAPI) => {
+        try {
+            await axios.post("http://localhost:4000/info", payload)
+            return thunkAPI.fulfillWithValue(payload)
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
     }
-]
+)
+
+
+
+const initialState = []
 
 export const storeSlice = createSlice({
     name: 'storeSlice',
@@ -36,7 +54,16 @@ export const storeSlice = createSlice({
                 }
             })
         }
+    },
+    extraReducers: {
+        //이게 맞나?
+        [asyncSaveFetch.pending]: (state, { payload }) => console.log(current(state)),
+        [asyncSaveFetch.fulfilled]: (state, { payload }) => state = payload,
+        [asyncSaveFetch.rejected]: (state, { payload }) => console.log(payload),
+        [asyncAddFetch.pending]: (state, { payload }) => console.log('hi'),
+        [asyncAddFetch.fulfilled]: (state, { payload }) => [...current(state), payload]
     }
+
 })
 
-export const { add, rev, del } = storeSlice.actions 
+export const { add, rev, del } = storeSlice.actions
