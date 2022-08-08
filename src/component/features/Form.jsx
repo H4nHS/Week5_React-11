@@ -28,25 +28,13 @@ const Form = () => {
                     const current_author = author.current.value;
                     const current_title = title.current.value;
                     const current_content = content.current.value;
-                    current_title.length < 10 ? alert('제목이 10글자 이하입니다 !') :
+                    current_title.length < 5 ? alert('제목이 5글자 이하입니다 !') :
                         dispatch(asyncAddFetch({ author: current_author, title: current_title, content: current_content }))
                     title.current.value = '';
                     content.current.value = '';
                 }}>submit</button>
             </form>
-
-            <div>
-                {user.map((value) => {
-                    return (
-                        <div key={value.id}>
-                            {value.author}<br />
-                            {value.title}<br />
-                            {value.content}
-                        </div>)
-                })}
-            </div>
         </>
-
     );
 };
 
