@@ -51,9 +51,8 @@ export const storeSlice = createSlice({
     name: 'storeSlice',
     initialState,
     extraReducers: {
-        //이게 맞나?
-        [asyncSaveFetch.fulfilled]: (state, { payload }) => state = payload,
-        [asyncAddFetch.fulfilled]: (state, { payload }) => [payload, ...current(state)],
+        [asyncSaveFetch.fulfilled]: (state, { payload }) => state = payload.sort((a, b) => b.postID - a.postID),
+        [asyncAddFetch.fulfilled]: (state, { payload }) => [...current(state), payload],
         [asyncDeleteFetch.fulfilled]: (state, { payload }) => state.filter((post) => post.id !== payload),
         [asyncUpdateFetch.fulfilled]: (state, { payload }) => state.map((list) => list.id === payload.id ? {...list, payload} : [list])
     }

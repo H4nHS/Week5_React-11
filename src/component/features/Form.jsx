@@ -16,7 +16,6 @@ const Form = () => {
     return (
         <>
             <FormContainer>
-                <UptoPage>최신 포스트</UptoPage>
                 <InputBlock placeholder='닉네임을 입력해주세요.' type="text" ref={author} />
                 <InputBlock placeholder='포스트 제목을 입력해주세요.' FontSize="1.3rem" FontWeight='700' type="text" ref={title} />
                 <InputTextArea placeholder='무슨 일이 일어나고 있나요?' cols="30" rows="10" ref={content} />
@@ -123,7 +122,4 @@ const SubmitButton = styled.button`
     }
 `
 
-const UptoPage = styled.button`
-    
-`
 export default Form;
