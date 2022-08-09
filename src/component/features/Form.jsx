@@ -35,7 +35,7 @@ const Form = () => {
                 }}>submit</button>
                 <button onClick={(e) => {
                     e.preventDefault()
-                    dispatch(asyncDeleteFetch({ postID: 5 }))
+                    dispatch(asyncDeleteFetch({ postID: 1660013797827 }))
                 }}>deleteBtn</button>
 
             </form>
