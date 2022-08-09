@@ -1,23 +1,22 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { rev, del } from '../../app/slice/CreateSlice';
+import { asyncDeleteFetch, asyncUpdateFetch} from '../../app/slice/CreateSlice';
 import { useNavigate, useLocation } from "react-router-dom";
 
 function Content() {
   const [content, setContent] = useState();
   const [mode, setMode] = useState("read");
-  const [text, setText] = useState({ title: "", content: "" });
+  const [text, setText] = useState({title:"", content:""});
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { state } = useLocation();
 
   useEffect(() => {
-    setContent(state);
-    setText({ ...text, title: state.title, content: state.content })
+      setContent(state);
+      setText({...text, title:state.title, content:state.content})
   }, [mode])
-
 
   // moving Main page
   function backspaceMain() {
@@ -25,38 +24,50 @@ function Content() {
   }
 
   // toogle box setting
-  function toggleButtonActive(event) {
+  function toggleButtonActive (event) {
     const box = event.target.nextElementSibling;
     box.style.display === '' || box.style.display === 'none' ? box.style.display = 'flex' : box.style.display = 'none'
   }
 
   //read mode setting
-  function deleteContent() {
-    dispatch(del({ id: content.id }))
+  function deleteContent () {
+    dispatch(asyncDeleteFetch(content.id));
+    alert("포스트를 삭제했습니다!")
     navigate('/');
   }
 
-  function modifyContent() {
+  function modifyContent () {
     setMode('modify')
   }
 
   // modify mode setting
-  function modifyCancel() {
+  function modifyCancel () {
     setMode('Read')
   }
 
   function modifyForm(event) {
     const { name, value } = event.target;
-    setText({ ...text, [name]: value })
+    setText({...text, [name]:value})
   }
 
   function modifyVerified(event) {
     event.preventDefault();
-    dispatch(rev({ id: content.id, title: text.title, content: text.content }))
+
+    if (text.title === "") {
+      alert("수정할 제목을 작성해주십시오.")
+      return
+    } else if (text.content === "") {
+      alert("수정할 내용을 작성해주십시오.")
+      return
+    } 
+
+    const updateData = {author: content.author, id: content.id, title: text.title, content: text.content, postID: content.postID}
+    dispatch(asyncUpdateFetch(updateData))
+    alert("수정이 완료됐습니다!")
+    navigate(`/detail/${updateData.postID}`, {state: updateData})
     setMode('Read')
   }
 
-  console.log(content)
   // if mode === 'Modify' then
   return (
     <>
@@ -76,7 +87,7 @@ function Content() {
           </ButtonMenu>
         </ModifyContainer>
 
-        :
+      :
 
         // if mode === 'Read' then
         <ContentContainer>
@@ -97,7 +108,7 @@ function Content() {
           <ContentBody>{content.content}</ContentBody>
         </ContentContainer>
       }
-    </>
+  </>
   )
 }
 

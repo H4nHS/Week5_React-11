@@ -4,12 +4,11 @@ import styled from "styled-components";
 
 function ContentBlock({ postData }) {
   const navigate = useNavigate();
+
   //page moving Home to Detail
   function intoDetailPage() {
-    console.log(postData)
     navigate(`/detail/${postData.postID}`, {state: postData})
   }
-  
 
   return (
     <>
@@ -19,11 +18,12 @@ function ContentBlock({ postData }) {
           <ContentHead>
             <HeadProfile>
               <HeadProfileName>{postData.author}</HeadProfileName>
-              <HeadProfileID>@{postData.id}</HeadProfileID>
+              <HeadProfileID>@{postData.postID}</HeadProfileID>
             </HeadProfile>
           </ContentHead>
           <ContentTitle>{postData.title}</ContentTitle>
           <ContentBody>{postData.content}</ContentBody>
+          <HeadProfileID>{postData.date}</HeadProfileID>
         </ContentContainer>
       }
   </>

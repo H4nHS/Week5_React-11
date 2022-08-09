@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Form from '../component/features/Form';
-import { useSelector } from 'react-redux/es/exports';
+import { useDispatch, useSelector } from 'react-redux/es/exports';
 import styled from "styled-components";
 import ContentBlock from "../component/features/ContentBlock";
+import { asyncSaveFetch } from "../app/slice/CreateSlice";
 
 function Home () {
   const contextList = useSelector(state => state.store);
-  console.log(contextList)
+  const dispatch = useDispatch();
+  
+  useEffect(() => {
+    dispatch(asyncSaveFetch())
+}, [contextList])
+
+  
   return(
     <>
       <TextList>
