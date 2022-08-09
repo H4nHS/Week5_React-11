@@ -1,10 +1,10 @@
-import React from 'react';
-import './App.css';
-import Router from './shared/router';
+import React from "react";
+import "./App.css";
+import Router from "./shared/router";
 
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <Router />
     </div>
   );

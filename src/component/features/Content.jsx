@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import { rev, del} from '../../app/slice/CreateSlice';
+import { rev, del } from '../../app/slice/CreateSlice';
 import { useNavigate, useLocation } from "react-router-dom";
 
 function Content() {
   const [content, setContent] = useState();
   const [mode, setMode] = useState("read");
-  const [text, setText] = useState({title:"", content:""});
+  const [text, setText] = useState({ title: "", content: "" });
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { state } = useLocation();
 
   useEffect(() => {
-      setContent(state);
-      setText({...text, title:state.title, content:state.content})
+    setContent(state);
+    setText({ ...text, title: state.title, content: state.content })
   }, [mode])
-  
+
 
   // moving Main page
   function backspaceMain() {
@@ -25,34 +25,34 @@ function Content() {
   }
 
   // toogle box setting
-  function toggleButtonActive (event) {
+  function toggleButtonActive(event) {
     const box = event.target.nextElementSibling;
     box.style.display === '' || box.style.display === 'none' ? box.style.display = 'flex' : box.style.display = 'none'
   }
 
   //read mode setting
-  function deleteContent () {
-    dispatch(del({id: content.id}))
+  function deleteContent() {
+    dispatch(del({ id: content.id }))
     navigate('/');
   }
-  
-  function modifyContent () {
+
+  function modifyContent() {
     setMode('modify')
   }
 
   // modify mode setting
-  function modifyCancel () {
+  function modifyCancel() {
     setMode('Read')
   }
 
   function modifyForm(event) {
     const { name, value } = event.target;
-    setText({...text, [name]:value})
+    setText({ ...text, [name]: value })
   }
 
   function modifyVerified(event) {
     event.preventDefault();
-    dispatch(rev({id: content.id, title: text.title, content: text.content}))
+    dispatch(rev({ id: content.id, title: text.title, content: text.content }))
     setMode('Read')
   }
 
@@ -76,7 +76,7 @@ function Content() {
           </ButtonMenu>
         </ModifyContainer>
 
-      :
+        :
 
         // if mode === 'Read' then
         <ContentContainer>
@@ -97,7 +97,7 @@ function Content() {
           <ContentBody>{content.content}</ContentBody>
         </ContentContainer>
       }
-  </>
+    </>
   )
 }
 

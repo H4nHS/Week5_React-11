@@ -22,6 +22,17 @@ export const asyncAddFetch = createAsyncThunk('add',
     }
 )
 
+export const asyncDeleteFetch = createAsyncThunk('delete',
+    async (payload, thunkAPI) => {
+        try {
+            await axios.delete(`http://localhost:4000/info/${payload.postID}`)
+            return thunkAPI.fulfillWithValue(payload)
+        } catch (error) {
+            return thunkAPI.rejectWithValue(error);
+        }
+    }
+)
+
 
 
 const initialState = []
@@ -57,11 +68,11 @@ export const storeSlice = createSlice({
     },
     extraReducers: {
         //이게 맞나?
-        [asyncSaveFetch.pending]: (state, { payload }) => console.log(current(state)),
         [asyncSaveFetch.fulfilled]: (state, { payload }) => state = payload,
-        [asyncSaveFetch.rejected]: (state, { payload }) => console.log(payload),
-        [asyncAddFetch.pending]: (state, { payload }) => console.log('hi'),
-        [asyncAddFetch.fulfilled]: (state, { payload }) => [...current(state), payload]
+        [asyncAddFetch.fulfilled]: (state, { payload }) => [...current(state), payload],
+        [asyncDeleteFetch.fulfilled]: (state, { payload }) => {
+            return current(state).filter((value) => value.postID !== payload.postID)
+        }
     }
 
 })
