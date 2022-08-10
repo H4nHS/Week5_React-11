@@ -38,7 +38,6 @@ export const asyncUpdateFetch = createAsyncThunk('update',
     async (payload, thunkAPI) => {
         try {
             await axios.put(process.env.REACT_APP_API+`${payload.id}`, payload)
-            return thunkAPI.fulfillWithValue(payload)
         } catch (error) {
             return thunkAPI.rejectWithValue(error);
         }

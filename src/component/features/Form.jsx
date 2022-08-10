@@ -1,17 +1,13 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux/es/exports';
 import styled from 'styled-components';
-import { asyncSaveFetch, asyncAddFetch } from '../../app/slice/CreateSlice';
+import { asyncAddFetch } from '../../app/slice/CreateSlice';
 
-const Form = () => {
+const Form = ({ setRefresh }) => {
     const title = useRef();
     const content = useRef();
     const author = useRef();
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(asyncSaveFetch())
-    }, [dispatch])
 
     return (
         <>
@@ -32,10 +28,11 @@ const Form = () => {
                     else if (current_content.length < 10)
                         return alert('내용은 10글자 이상이어야 합니다.');
                     else {
-                        dispatch(asyncAddFetch({author: current_author, title: current_title, content: current_content, postID: new Date().getTime()}))
+                        dispatch(asyncAddFetch({author: current_author, title: current_title, content: current_content, postID: new Date().getTime(), commentList:[]}))
                         author.current.value = '';
                         title.current.value = '';
                         content.current.value = '';
+                        setRefresh(true)
                     }
                 }}>포스트하기</SubmitButton>
             </FormContainer>
