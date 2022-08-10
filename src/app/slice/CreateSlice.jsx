@@ -47,7 +47,7 @@ export const asyncUpdateFetch = createAsyncThunk('update',
 
 const initialState = []
 
-export const storeSlice = createSlice({
+const storeSlice = createSlice({
     name: 'storeSlice',
     initialState,
     extraReducers: {
@@ -58,4 +58,4 @@ export const storeSlice = createSlice({
     }
 })
 
-export const { add, rev, del } = storeSlice.actions
+export default storeSlice;

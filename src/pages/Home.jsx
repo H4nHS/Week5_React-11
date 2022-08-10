@@ -15,7 +15,7 @@ function Home () {
 
   useEffect(() => {
     dispatch(asyncSaveFetch())
-}, [contextList])
+}, [contextList, dispatch])
 
   
   return(

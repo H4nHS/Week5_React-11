@@ -11,7 +11,7 @@ const Form = () => {
 
     useEffect(() => {
         dispatch(asyncSaveFetch())
-    }, [])
+    }, [dispatch])
 
     return (
         <>
