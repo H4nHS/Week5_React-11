@@ -3,20 +3,41 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import { asyncDeleteFetch, asyncUpdateFetch} from '../../app/slice/CreateSlice';
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { asyncDeleteFetch, asyncSaveFetch, asyncUpdateFetch} from '../../app/slice/CreateSlice';
+import { useNavigate, useParams } from "react-router-dom";
 
 function Content() {
   const [content, setContent] = useState();
   const [mode, setMode] = useState("read");
   const [text, setText] = useState({title:"", content:""});
 
+  const [text, setText] = useState();
+  const [refresh, setRefresh] = useState(false)
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { state } = useLocation();
+  const param = useParams();
+  // const { state } = useLocation();
+  const state = useSelector(state => state.store);
+
+  useEffect(()=>{
+    dispatch(asyncSaveFetch());
+    setRefresh(false)
+  },[dispatch, refresh])
 
   useEffect(() => {
       setContent(state);
       setText({...text, title:state.title, content:state.content})
   }, [mode])
+      if (state.length !== 0) {
+        const detailData = state.find(elem => elem.postID === Number(param.id))
+        setContent(detailData);
+        setText({...text, title:detailData.title, content:detailData.content})
+      }
+  }, [mode, state])
+
 
   // moving Main page
   function backspaceMain() {
@@ -62,9 +83,11 @@ function Content() {
     } 
 
     const updateData = {author: content.author, id: content.id, title: text.title, content: text.content, postID: content.postID}
+    const updateData = {...content, title: text.title, content: text.content}
     dispatch(asyncUpdateFetch(updateData))
     alert("수정이 완료됐습니다!")
     navigate(`/detail/${updateData.postID}`, {state: updateData})
+    setRefresh(true)
     setMode('Read')
   }
 
@@ -124,9 +147,12 @@ const ContentContainer = styled.div`
   /* border-left:2px solid black; */
   padding: 0 2rem;
   margin:auto;
+  margin:0;
+  margin-top: 0;
 
   width: 600px;
   height: 100vh;
+  height: 70vh;
 
   box-sizing: border-box;
 `
