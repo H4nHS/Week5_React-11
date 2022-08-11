@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux/es/exports';
 import styled from 'styled-components';
 import { asyncAddFetch } from '../../app/slice/CreateSlice';
@@ -13,25 +13,28 @@ const Form = ({ setRefresh }) => {
     return (
         <>
             <FormContainer>
-                <InputBlock placeholder='닉네임을 입력해주세요.' type="text" value={author} onChange={onAuthorHandler} />
-                <InputBlock placeholder='포스트 제목을 입력해주세요.' FontSize="1.3rem" value={title} onChange={onTitleHandler} FontWeight='700' type="text" />
-                <InputTextArea placeholder='무슨 일이 일어나고 있나요?' cols="30" rows="10" value={content} onChange={onContentHandler} />
-                <SubmitButton onClick={(e) => {
-                    e.preventDefault();
-                    if (author.length < 1)
-                        return alert('닉네임을 입력해주십시오.');
-                    else if (title.length < 5)
-                        return alert('제목은 5글자 이상이어야 합니다.');
-                    else if (content.length < 10)
-                        return alert('내용은 10글자 이상이어야 합니다.');
-                    else {
-                        dispatch(asyncAddFetch({ author, title, content, postID: new Date().getTime(), commentList: [] }))
-                        setRefresh(true);
-                        setAuthor('');
-                        setTitle('');
-                        setContent('');
-                    }
-                }}>포스트하기</SubmitButton>
+                <InputBlock placeholder='닉네임을 입력해주세요.' type="text" maxLength="20" value={author} onChange={onAuthorHandler} />
+                <InputBlock placeholder='포스트 제목을 입력해주세요.' FontSize="1.3rem" maxLength="30" value={title} onChange={onTitleHandler} FontWeight='700' type="text" />
+                <InputTextArea placeholder='무슨 일이 일어나고 있나요?' cols="30" rows="10" maxLength="140" value={content} onChange={onContentHandler} />
+                <ButtonContainer>
+                    <ContentCounter color={140 - content.length < 20 ? "red" : "white" }>{140 - content.length}</ContentCounter>
+                    <SubmitButton onClick={(e) => {
+                        e.preventDefault();
+                        if (author.length < 1)
+                            return alert('닉네임을 입력해주십시오.');
+                        else if (title.length < 5)
+                            return alert('제목은 5글자 이상이어야 합니다.');
+                        else if (content.length < 10)
+                            return alert('내용은 10글자 이상이어야 합니다.');
+                        else {
+                            dispatch(asyncAddFetch({ author, title, content, postID: new Date().getTime(), commentList: [] }))
+                            setRefresh(true);
+                            setAuthor('');
+                            setTitle('');
+                            setContent('');
+                        }
+                    }}>포스트하기</SubmitButton>
+                </ButtonContainer>
             </FormContainer>
         </>
     );
@@ -44,7 +47,6 @@ const FormContainer = styled.form`
     color: #ffffff;
 
     border:1px solid gray;
-  /* border-left:2px solid black; */
     padding:0;
     margin:auto;
 
@@ -103,8 +105,8 @@ const SubmitButton = styled.button`
     border: none;
     border-radius: 1.5rem;
     outline: none;
-    padding:0.9rem 1.2rem;
-    margin: 0.5rem 1rem 0.5rem auto;
+    padding:0.7rem 1.2rem;
+    margin: 0.7rem 1rem 0.7rem auto;
 
     cursor: pointer;
     transition: ease 0.2s;
@@ -114,6 +116,20 @@ const SubmitButton = styled.button`
         color:#ffffff;
         transition: ease 0.2s;
     }
+`
+
+const ButtonContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+`
+
+const ContentCounter = styled.span`
+    font-size: 1.5rem;
+    margin-left:1.5rem;
+    
+    color:${props => props.color}
 `
 
 export default Form;

@@ -59,6 +59,7 @@ function Comment() {
           placeholder="닉네임"
           value={comment.author}
           onChange={inputChange}
+          maxLength="7"
         />
         <CommentInput
           name="comment"
@@ -100,18 +101,19 @@ const CommentContainer = styled.div`
 const InputForm = styled.form`
   display: flex;
   width: 100%;
-  margin: 1em 0 2em 0;
+  margin: 1em 0 0 0;
 `;
 
 const NicknameInput = styled.input`
+  background: #444d56;
   height: 30px;
   width: 9.5em;
   border: none;
   border-radius: 5px;
+  color: #ffffff;
   display: flex;
   margin: 0 0.75em 0 0.6em;
   padding-left: 1em;
-  opacity: 0.2;
 
   &:focus {
     outline: 1px solid white;
@@ -119,12 +121,13 @@ const NicknameInput = styled.input`
 `;
 
 const CommentInput = styled.input`
+  background: #444d56;
   height: 30px;
   width: 26.5em;
+  color: #ffffff;
   border: none;
   border-radius: 5px;
   padding-left: 1em;
-  opacity: 0.2;
 
   &:focus {
     outline: 1px solid white;

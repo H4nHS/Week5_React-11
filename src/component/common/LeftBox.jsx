@@ -32,7 +32,7 @@ const LeftSection = styled.div`
   border-right: 1px solid gray;
 
   margin-left: auto;
-  transform: translateX(41.5%);
+  transform: translateX(42%);
 `
 // 이렇게 고정해도 창을 줄이면 망가짐.. 유의하자.
 

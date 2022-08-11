@@ -2,12 +2,12 @@ import styled, { css } from "styled-components";
 
 const ST = {
   OdSubmit: css`
-    /* --fontSize: 1rem; */
+    --fontSize: 0.8rem;
     --margin: 0px 1rem;
     --width: 3em;
-
     &:hover {
       --hoverFontWeight: 600;
+      --hoverFontSize: 0.85rem;
     }
   `,
   BackSpaceBtn: css`
@@ -35,7 +35,6 @@ const ST = {
     --padding: 0.5rem 1rem;
     --cursor: pointer;
     --transition: 0.1s ease;
-
     &:hover {
      --hoverBgColor: gray;
      --hoverBoderRadius: ${(props) => props.radius || "5px"}
@@ -46,7 +45,6 @@ const ST = {
     --margin: 0 0.6em 0 0;
     --padding: 0 0em 0 0;
     --opacity: 0.5;
-
     &:hover {
       --hoverFontWeight: bold;
     }
@@ -54,7 +52,6 @@ const ST = {
   DelBtn: css`
     --opacity: 0.5;
     --dispaly: flex;
-
     &:hover {
       --hoverFontWeight: bold;
     }
@@ -63,7 +60,6 @@ const ST = {
     --opacity: 1;
     --padding: 0 0 0 0em;
     --margin: 0 0.6em 0 0em
-
     &:hover {
       --hoverFontWeight: bold;
       opacity: none;
@@ -83,11 +79,10 @@ function Button({ st, children, onClick, props, id }) {
 
 const StyledButton = styled.button`
   ${(p) => p.stStyle}
-
   margin: var(--margin,);
   border: var(--border, none);
   cursor: var(--cusor, pointer);
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: "AritaDotum", sans-serif;
   font-size: var(--fontSize);
   padding: var(--padding);
   border-radius: var(--boderRadius);
@@ -100,7 +95,6 @@ const StyledButton = styled.button`
   transition: var(--transition);
   position: var(--position);
   opacity: var(--opacity);
-
   &:hover {
     background: var(--hoverBgColor);
     border-radius: var(--hoverBoderRadius);

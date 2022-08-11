@@ -7,7 +7,8 @@ function RightBox () {
   const navigate = useNavigate();
 
   function moveToPost( event ) {
-    navigate(`/detail/${event.target.id}`)  
+    console.log(event.target.id)
+    navigate(`/detail/${event.target.id}`)
   }
 
   return (
@@ -17,13 +18,12 @@ function RightBox () {
         <HeaderText>최근 뜨는 포스트</HeaderText>
         <InfoText>다른 사람들의 요즘 관심사를 구경해보세요.</InfoText>
         {postList.length === 0 ?
-          <AlertPost>현재 포스트가 없습니다.</AlertPost>:
-            postList.slice(0,4).map(elem=>{
-              console.log(elem)
-              return <PostBox key={elem.id} id={elem.postID} onClick={moveToPost}>
+          <AlertPost>🙀 현재 포스트가 없습니다.</AlertPost>:
+            postList.slice(0,4).map(elem=>
+              <PostBox key={elem.id} id={elem.postID} onClick={moveToPost}>
                 <PostHeader id={elem.postID} onClick={moveToPost}>{elem.title.length > 24 ? elem.title.substring(0,23) + "..." : elem.title}</PostHeader>
                 <InfoText id={elem.postID} onClick={moveToPost}>{elem.author.length > 24 ? elem.author.substring(0,17) + "..." : elem.author}</InfoText>
-              </PostBox>}
+              </PostBox>
             )
           }
         <FooterText></FooterText>

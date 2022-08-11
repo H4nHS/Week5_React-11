@@ -27,7 +27,7 @@ function Home() {
       <TextList>
         <UptoPage onClick={clickToTopPage}>최신 포스트　▲</UptoPage>
         <Form setRefresh={setRefresh} />
-        {contextList.length === 0 ? <LoadingBox>포스트를 가져오고 있습니다...</LoadingBox> : contextList.map(elem => {
+        {contextList.length === 0 ? <LoadingBox>🚧 현재 등록된 포스트가 없거나<br />포스트를 열심히 가져오는 중입니다...</LoadingBox> : contextList.map(elem => {
           return <ContentBlock key={elem.postID} postData={elem} />
         })}
       </TextList>

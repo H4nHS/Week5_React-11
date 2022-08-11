@@ -71,7 +71,13 @@ function Content() {
     } else if (text.content === "") {
       alert("수정할 내용을 작성해주십시오.")
       return
-    } 
+    } else if (text.title.length < 5) {
+      alert('제목은 5글자 이상이어야 합니다.')
+      return
+    } else if (text.content.length < 10) {
+      alert('내용은 10글자 이상이어야 합니다.')
+      return
+    }
 
     const updateData = {...content, title: text.title, content: text.content}
     dispatch(asyncUpdateFetch(updateData))
@@ -85,15 +91,17 @@ function Content() {
     <>
       {content === undefined ? <div> Now Loading... </div> : mode === 'modify' ?
         <ModifyContainer onSubmit={modifyVerified}>
+          <BackSpaceBtn onClick={backspaceMain}>←　스레드</BackSpaceBtn>
           <ContentHead>
             <HeadProfile>
               <HeadProfileName>{content.author}</HeadProfileName>
               <HeadProfileID>@{content.postID}</HeadProfileID>
             </HeadProfile>
           </ContentHead>
-          <ContentModifyTitle name="title" value={text.title} onChange={modifyForm} placeholder="수정할 제목을 입력해주세요."></ContentModifyTitle>
-          <ContentModifyBody name="content" value={text.content} onChange={modifyForm} placeholder="수정할 내용을 입력해주세요."></ContentModifyBody>
+          <ContentModifyTitle name="title" value={text.title} maxLength="30" onChange={modifyForm} placeholder="수정할 제목을 입력해주세요."></ContentModifyTitle>
+          <ContentModifyBody name="content" value={text.content} maxLength="140" onChange={modifyForm} placeholder="수정할 내용을 입력해주세요."></ContentModifyBody>
           <ButtonMenu>
+            <ContentCounter color={140 - text.content.length < 20 ? "red" : "white" }>{140 - text.content.length}</ContentCounter>
             <MenuBoxBtn type="submit">수정</MenuBoxBtn>
             <MenuBoxBtn onClick={modifyCancel}>취소</MenuBoxBtn>
           </ButtonMenu>
@@ -137,7 +145,7 @@ const ContentContainer = styled.div`
   margin-top: 0;
 
   width: 600px;
-  height: 70vh;
+  height: 60vh;
 
   box-sizing: border-box;
 `
@@ -148,13 +156,14 @@ const BackSpaceBtn = styled.button`
   color: #ffffff;
   font-weight: 700;
   font-size: 1.5rem;
+  text-align: left;
 
   display: block;
 
   border:none;
   margin: 0;
   margin-top: 1rem;
-  margin-right: auto;
+  margin-right: 0;
 
   cursor:pointer;
 `
@@ -265,7 +274,9 @@ const ContentModifyTitle = styled.input`
 
   font-size: 1.9rem;
   text-align: left;
+  font-family: "AritaDotum", sans-serif;
   color: #ffffff;
+  font-weight: 700;
 
   border:none;
   outline:none;
@@ -281,13 +292,15 @@ const ContentModifyBody = styled.textarea`
 
   font-size: 1rem;
   text-align: left;
+  font-family: "AritaDotum", sans-serif;
+  font-weight: 300;
   color: #ffffff;
 
   border:none;
   border-bottom: 1px solid gray;
   border-radius: 0;
   outline:none;
-  margin: 0.5rem 0;
+  margin: 0;
   padding: 0.5rem;
 
   height: 200px;
@@ -303,14 +316,14 @@ const ModifyContainer = styled.form`
 
     color: #ffffff;
 
-  border-right:2px solid black;
-  border-left:2px solid black;
+  border: 1px solid gray;
   padding: 0 2rem;
-  padding-top: 4rem;
-  margin:auto;
+
+  margin:0;
+  margin-top:0;
 
   width: 600px;
-  height:100vh;
+  height: 60vh;
 
   box-sizing: border-box;
 `
@@ -319,8 +332,17 @@ const ButtonMenu = styled.div`
   display:flex;
   flex-direction: row;
   justify-content: flex-end;
+  align-items: center;
   gap:1rem;
   margin: 0.5rem 0;
+`
+
+const ContentCounter = styled.span`
+    font-size: 1.5rem;
+    margin-left:1.5rem;
+    margin-right:auto;
+
+    color:${props => props.color}
 `
 
 export default Content;
