@@ -48,6 +48,11 @@ const ContentContainer = styled.div`
 
   cursor: pointer;
   box-sizing: border-box;
+  transition: ease 0.3s;
+
+  &:hover {
+    background: #1c2732;
+  }
 `
 
 const ContentHead = styled.div`
