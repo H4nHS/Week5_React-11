@@ -2,14 +2,17 @@ import React from "react";
 import styled from "styled-components";
 import Comment from "../component/features/Comment";
 import Content from "../component/features/Content";
+import MainLayout from "../Layout/MainLayout";
 
 function Detail () {
 
   return(
-    <DetailContainer>
-      <Content />
-      <Comment />
-    </DetailContainer>
+    <MainLayout>
+      <DetailContainer>
+        <Content />
+        <Comment />
+      </DetailContainer>
+    </MainLayout>
   )
 }
 

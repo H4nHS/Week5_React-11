@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux/es/exports';
 import styled from "styled-components";
 import ContentBlock from "../component/features/ContentBlock";
 import { asyncSaveFetch } from "../app/slice/CreateSlice";
+import MainLayout from "../Layout/MainLayout";
 
 function Home() {
   const [refresh, setRefresh] = useState(false);
@@ -22,15 +23,15 @@ function Home() {
 
 
   return (
-    <>
+    <MainLayout>
       <TextList>
         <UptoPage onClick={clickToTopPage}>최신 포스트　▲</UptoPage>
         <Form setRefresh={setRefresh} />
-        {contextList.map(elem => {
+        {contextList.length === 0 ? <LoadingBox>포스트를 가져오고 있습니다...</LoadingBox> : contextList.map(elem => {
           return <ContentBlock key={elem.postID} postData={elem} />
         })}
       </TextList>
-    </>
+    </MainLayout>
   )
 }
 
@@ -54,15 +55,20 @@ const UptoPage = styled.button`
   font-weight: 700;
   position: fixed;
 
-  border: none;
+  border:1px solid gray;
   outline: none;
   padding: 1rem 1rem;
   
-  width: 600px;
+  width: 598px;
   height: 50px;
   top:0;
   z-index: 999;
   cursor: pointer;
+`
+
+const LoadingBox = styled.h2`
+  color: white;
+  margin:10rem auto;
 `
 
 export default Home;
