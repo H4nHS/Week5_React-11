@@ -1,41 +1,35 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { useDispatch } from 'react-redux/es/exports';
 import styled from 'styled-components';
-import { asyncSaveFetch, asyncAddFetch } from '../../app/slice/CreateSlice';
+import { asyncAddFetch } from '../../app/slice/CreateSlice';
+import useInput from '../../hooks/useInput';
 
-const Form = () => {
-    const title = useRef();
-    const content = useRef();
-    const author = useRef();
+const Form = ({ setRefresh }) => {
+    const [author, setAuthor, onAuthorHandler] = useInput('');
+    const [title, setTitle, onTitleHandler] = useInput('');
+    const [content, setContent, onContentHandler] = useInput('');
     const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(asyncSaveFetch())
-    }, [])
 
     return (
         <>
             <FormContainer>
-                <InputBlock placeholder='닉네임을 입력해주세요.' type="text" ref={author} />
-                <InputBlock placeholder='포스트 제목을 입력해주세요.' FontSize="1.3rem" FontWeight='700' type="text" ref={title} />
-                <InputTextArea placeholder='무슨 일이 일어나고 있나요?' cols="30" rows="10" ref={content} />
+                <InputBlock placeholder='닉네임을 입력해주세요.' type="text" value={author} onChange={onAuthorHandler} />
+                <InputBlock placeholder='포스트 제목을 입력해주세요.' FontSize="1.3rem" value={title} onChange={onTitleHandler} FontWeight='700' type="text" />
+                <InputTextArea placeholder='무슨 일이 일어나고 있나요?' cols="30" rows="10" value={content} onChange={onContentHandler} />
                 <SubmitButton onClick={(e) => {
                     e.preventDefault();
-                    const current_author = author.current.value;
-                    const current_title = title.current.value;
-                    const current_content = content.current.value;
-
-                    if (current_author.length < 1)
+                    if (author.length < 1)
                         return alert('닉네임을 입력해주십시오.');
-                    else if (current_title.length < 5)
+                    else if (title.length < 5)
                         return alert('제목은 5글자 이상이어야 합니다.');
-                    else if (current_content.length < 10)
+                    else if (content.length < 10)
                         return alert('내용은 10글자 이상이어야 합니다.');
                     else {
-                        dispatch(asyncAddFetch({ author: current_author, title: current_title, content: current_content, postID: new Date().getTime() }))
-                        author.current.value = '';
-                        title.current.value = '';
-                        content.current.value = '';
+                        dispatch(asyncAddFetch({ author, title, content, postID: new Date().getTime(), commentList: [] }))
+                        setRefresh(true);
+                        setAuthor('');
+                        setTitle('');
+                        setContent('');
                     }
                 }}>포스트하기</SubmitButton>
             </FormContainer>
