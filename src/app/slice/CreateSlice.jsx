@@ -38,17 +38,15 @@ export const asyncUpdateFetch = createAsyncThunk('update',
     async (payload, thunkAPI) => {
         try {
             await axios.put(process.env.REACT_APP_API + `${payload.id}`, payload)
-            return thunkAPI.fulfillWithValue(payload)
         } catch (error) {
             return thunkAPI.rejectWithValue(error);
         }
     }
 )
 
-
 const initialState = []
 
-export const storeSlice = createSlice({
+const storeSlice = createSlice({
     name: 'storeSlice',
     initialState,
     extraReducers: {
@@ -59,4 +57,4 @@ export const storeSlice = createSlice({
     }
 })
 
-export const { add, rev, del } = storeSlice.actions
+export default storeSlice;

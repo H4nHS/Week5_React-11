@@ -6,7 +6,6 @@ import Content from "../component/features/Content";
 function Detail () {
 
   return(
-    <Content />
     <DetailContainer>
       <Content />
       <Comment />

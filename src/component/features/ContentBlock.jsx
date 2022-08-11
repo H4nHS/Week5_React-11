@@ -7,10 +7,8 @@ function ContentBlock({ postData }) {
 
   //page moving Home to Detail
   function intoDetailPage() {
-    navigate(`/detail/${postData.postID}`, {state: postData})
     navigate(`/detail/${postData.postID}`)
   }
-
   // {state: postData}
   return (
     <>
