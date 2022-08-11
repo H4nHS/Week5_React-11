@@ -1,10 +1,14 @@
 import styled, { css } from "styled-components";
 
 const ST = {
-  xs: css`
-    --fontSize: 1.5rem;
-    --padding: 4px 8px;
-    --radius: 2px;
+  OdSubmit: css`
+    /* --fontSize: 1rem; */
+    --margin: 0px 1rem;
+    --width: 3em;
+
+    &:hover {
+      --hoverFontWeight: 600;
+    }
   `,
   BackSpaceBtn: css`
     --bg: none;
@@ -38,13 +42,40 @@ const ST = {
      --hoverBorderColor: white;
     }
   `,
+  MdBtn: css`
+    --margin: 0 0.6em 0 0;
+    --padding: 0 0em 0 0;
+    --opacity: 0.5;
+
+    &:hover {
+      --hoverFontWeight: bold;
+    }
+  `,
+  DelBtn: css`
+    --opacity: 0.5;
+    --dispaly: flex;
+
+    &:hover {
+      --hoverFontWeight: bold;
+    }
+  `,
+  MdBtn2: css`
+    --opacity: 1;
+    --padding: 0 0 0 0em;
+    --margin: 0 0.6em 0 0em
+
+    &:hover {
+      --hoverFontWeight: bold;
+      opacity: none;
+    }
+  `,
 };
 
-function Button({ st, children, onClick, props }) {
+function Button({ st, children, onClick, props, id }) {
   const stStyle = ST[st];
 
   return (
-    <StyledButton stStyle={stStyle} onClick={onClick} props={props}>
+    <StyledButton stStyle={stStyle} onClick={onClick} props={props} id={id}>
       {children}
     </StyledButton>
   );
@@ -53,25 +84,29 @@ function Button({ st, children, onClick, props }) {
 const StyledButton = styled.button`
   ${(p) => p.stStyle}
 
-  margin: var(--margin, 0px 0px 0px 0px);
+  margin: var(--margin,);
   border: var(--border, none);
   cursor: var(--cusor, pointer);
   font-family: "Noto Sans KR", sans-serif;
-  font-size: var(--fontSize, 1rem);
-  padding: var(--padding, 12px 16px);
-  border-radius: var(--boderRadius, 8px);
-  color: var(--color, #ffffff);
-  background: var(--bgColor, #0d6efd);
+  font-size: var(--fontSize);
+  padding: var(--padding);
+  border-radius: var(--boderRadius);
+  color: var(--color);
+  background: var(--bgColor);
   display: var(--display);
   flex-direction: var(--flexDiretion);
   background: var(--bg);
   font-weight: var(--fontWeight);
   transition: var(--transition);
+  position: var(--position);
+  opacity: var(--opacity);
 
   &:hover {
-    background: var(--hoverBgColor, #025ce2);
+    background: var(--hoverBgColor);
     border-radius: var(--hoverBoderRadius);
-    color: var(hoverBorderColor);
+    color: var(--hoverBorderColor);
+    font-size: var(--hoverFontSize);
+    font-weight: var(--hoverFontWeight);
   }
 `;
 
