@@ -1,8 +1,3 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux/es/exports';
-import { add, rev, del } from '../../app/slice/CreateSlice';
-import { asyncSaveFetch, asyncAddFetch, asyncDeleteFetch } from '../../app/slice/CreateSlice';
-import axios from 'axios';
 import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux/es/exports';
 import styled from 'styled-components';
@@ -13,21 +8,13 @@ const Form = () => {
     const content = useRef();
     const author = useRef();
     const dispatch = useDispatch()
-    const user = useSelector(state => state.store)
 
     useEffect(() => {
         dispatch(asyncSaveFetch())
-        console.log('user:', user)
-
     }, [])
 
     return (
         <>
-            <form style={{ display: 'flex', flexFlow: 'column', width: '200px' }}>
-                <input type="text" ref={author} />
-                <input type="text" ref={title} />
-                <textarea cols="30" rows="10" ref={content} />
-                <button onClick={(e) => {
             <FormContainer>
                 <InputBlock placeholder='닉네임을 입력해주세요.' type="text" ref={author} />
                 <InputBlock placeholder='포스트 제목을 입력해주세요.' FontSize="1.3rem" FontWeight='700' type="text" ref={title} />
@@ -37,34 +24,21 @@ const Form = () => {
                     const current_author = author.current.value;
                     const current_title = title.current.value;
                     const current_content = content.current.value;
-                    current_title.length < 5 ? alert('제목이 5글자 이하입니다 !') :
-                        dispatch(asyncAddFetch({ author: current_author, title: current_title, content: current_content, postID: new Date().getTime() }))
-                    title.current.value = '';
-                    content.current.value = '';
-                }}>submit</button>
-                }}>submit</SubmitButton>
-                <button onClick={(e) => {
-                    e.preventDefault()
-                    dispatch(asyncDeleteFetch({ postID: 1660013797827 }))
-                }}>deleteBtn</button>
-            </FormContainer>
-            <FormContainer>
 
-            </form>
-                if (current_author.length < 1)
-                return alert('닉네임을 입력해주십시오.');
-                else if (current_title.length < 5)
-                return alert('제목은 5글자 이상이어야 합니다.');
-                else if (current_content.length < 10)
-                return alert('내용은 10글자 이상이어야 합니다.');
-                else {
-                    dispatch(asyncAddFetch({ author: current_author, title: current_title, content: current_content, postID: new Date().getTime() }))
+                    if (current_author.length < 1)
+                        return alert('닉네임을 입력해주십시오.');
+                    else if (current_title.length < 5)
+                        return alert('제목은 5글자 이상이어야 합니다.');
+                    else if (current_content.length < 10)
+                        return alert('내용은 10글자 이상이어야 합니다.');
+                    else {
+                        dispatch(asyncAddFetch({ author: current_author, title: current_title, content: current_content, postID: new Date().getTime() }))
                         author.current.value = '';
-                title.current.value = '';
-                content.current.value = '';
+                        title.current.value = '';
+                        content.current.value = '';
                     }
                 }}>포스트하기</SubmitButton>
-        </FormContainer >
+            </FormContainer>
         </>
     );
 };

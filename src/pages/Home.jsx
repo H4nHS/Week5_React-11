@@ -1,34 +1,31 @@
-import React from "react";
 import React, { useEffect } from "react";
 import Form from '../component/features/Form';
-import { useSelector } from 'react-redux/es/exports';
 import { useDispatch, useSelector } from 'react-redux/es/exports';
 import styled from "styled-components";
 import ContentBlock from "../component/features/ContentBlock";
 import { asyncSaveFetch } from "../app/slice/CreateSlice";
 
-function Home () {
+function Home() {
   const contextList = useSelector(state => state.store);
-  console.log(contextList)
   const dispatch = useDispatch();
 
   const clickToTopPage = () => {
-    window.scrollTo({top: 0, behavior: "smooth"});
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   useEffect(() => {
     dispatch(asyncSaveFetch())
-}, [contextList])
+  }, [contextList])
+  let a = 4;
 
-  
-  return(
+  return (
     <>
       <TextList>
-      <UptoPage onClick={clickToTopPage}>최신 포스트　▲</UptoPage>
-      <Form />
-      {contextList.map(elem => {
-        return <ContentBlock key={elem.postID} postData={elem} />
-      })}
+        <UptoPage onClick={clickToTopPage}>최신 포스트　▲</UptoPage>
+        <Form />
+        {contextList.slice(0, a).map(elem => {
+          return <ContentBlock key={elem.postID} postData={elem} />
+        })}
       </TextList>
     </>
   )
