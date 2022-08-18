@@ -13,7 +13,7 @@ src
 │ 　　　 │  
 │ 　　　 └── features  
 │ 　　　　　　　 └── Form.jsx - Create + Redux toolkit - 종현님  
-│ 　　　　　　　 └── Content.jsx - Read, Update + 서버 데이터 - 따까리  
+│ 　　　　　　　 └── Content.jsx - Read, Update + 서버 데이터 -  
 │ 　　　　　　　 └── Comment.jsx - Create, Read, Update, Delete + Header, Button - 효승님  
 │  
 ├── layout // 페이지 구성 요소 - 해당 파일의 생성 여부는 고려중.
